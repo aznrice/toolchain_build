@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#Make a clean build
+if [ -e Makefile ];
+then
+    make -j25 distclean
+fi;
+
+#Make a clean install always
+if [ -d /tmp/arm-eabi ]
+then
+    rm -rf /tmp/arm-eabi
+fi;
+
+#Build Configuration
+./configure --prefix=/tmp/arm-eabi --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --with-gcc-version=linaro-4.8-2014.02 --with-binutils-version=2.24 --with-gmp-version=5.1.3 --with-mpfr-version=3.1.2 --with-mpc-version=1.0.2 --with-gdb-version=7.7 --with-sysroot=/ --enable-threads --enable-tls --disable-libgomp --disable-libstdc__-v3 --disable-libitm --disable-libsanitizer --disable-libatomic --with-fpu=neon --with-gnu-as --with-gnu-ld --enable-languages=c,c++
+
+#Build the toolchain
+make -j25;
+
+#Install the toolchain
+make install;
+
