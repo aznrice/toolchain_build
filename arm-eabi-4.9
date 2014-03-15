@@ -13,7 +13,7 @@ then
 fi;
 
 #Build Configuration
-./configure --prefix=/tmp/arm-eabi --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=Boosted --with-binutils-version=2.24 --with-gmp-version=current --with-mpfr-version=current --with-mpc-version=current --with-gdb-version=7.7 --with-sysroot=/ --enable-threads=single --disable-libsanitizer
+./configure --prefix=/tmp/arm-eabi --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=Boosted --with-binutils-version=2.24 --with-gmp-version=current --with-mpfr-version=current --with-mpc-version=current --with-gdb-version=7.7 --with-sysroot=/ --enable-threads=single --disable-libsanitizer --disable-libatomic
 
 #Build the toolchain
 make -j25;
