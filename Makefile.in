@@ -492,7 +492,7 @@ endif
 
 # ARM specific options.
 ifeq ($(target_cpu),arm)
-GCC_CONFIG_ARGS += --with-float=soft --with-fpu=neon --with-arch=armv5te \
+GCC_CONFIG_ARGS += --with-float=hard --with-fpu=neon --with-arch=armv7-a \
 	--enable-target-optspace
 
 ifneq ($(target_os),linux-androideabi)
@@ -524,7 +524,7 @@ stmp-config-target-gcc: config.status stmp-install-host-ppl stmp-install-host-is
 	   $(GCC_CONFIG_ARGS)) && \
 	$(STAMP) $@
 build-target-gcc: stmp-build-target-gcc
-stmp-build-target-gcc: stmp-config-target-gcc
+stmp-build-target-gcc: stmp-config-target-gcc install-target-binutils
 	($(canadian_env) \
 	 $(MAKE) -C ${GCC_VERSION} \
 		CFLAGS_FOR_TARGET="$(CFLAGS_FOR_TARGET)" \
@@ -842,7 +842,7 @@ build-target-gdb: stmp-build-target-gdb
 stmp-build-target-gdb: stmp-config-target-gdb
 	($(canadian_env) \
 	 $(MAKE) -C ${GDB_VERSION}) && $(STAMP) $@
-install-target-gdb: stmp-build-target-gdb
+install-target-gdb: stmp-build-target-gdb install-target-binutils
 	($(canadian_env) \
 	 $(MAKE) -C ${GDB_VERSION} install)
 endif
