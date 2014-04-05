@@ -7,13 +7,13 @@ then
 fi;
 
 #Make a clean install always
-if [ -d /tmp/arm-eabi ]
+if [ -d /home/hieu/arm-eabi ]
 then
-    rm -rf /tmp/arm-eabi
+    rm -rf /home/hieu/arm-eabi
 fi;
 
 #Build Configuration
-./configure --prefix=/tmp/arm-eabi --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=Boosted --with-binutils-version=2.25 --with-gmp-version=current --with-mpfr-version=current --with-mpc-version=current --with-gdb-version=7.7 --with-sysroot=/opt/android-ndk/platforms/android-19/arch-arm --enable-threads=single --disable-libsanitizer --disable-libatomic --with-tune=cortex-a15 --enable-tls --disable-softfloat
+./configure --prefix=/home/hieu/arm-eabi --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=Boosted --with-binutils-version=current --with-gmp-version=current --with-mpfr-version=current --with-mpc-version=current --with-gdb-version=7.7 --with-sysroot=/opt/android-ndk/platforms/android-19/arch-arm --with-cloog-version=current
 
 #Build the toolchain
 make -j12;
