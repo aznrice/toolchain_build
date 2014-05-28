@@ -1,23 +1,26 @@
 #!/bin/bash
 
+# Set number of cores here
+export J=-j24;
+
 #Make a clean build
 if [ -e Makefile ];
 then
-    make -j12 distclean
+    make $J distclean
 fi;
 
+
 #Make a clean install always
-if [ -d /tmp/arm-eabi ]
+if [ -d /tmp/arm-eabi-4.8 ]
 then
-    rm -rf /tmp/arm-eabi
+    rm -rf /tmp/arm-eabi-4.8
 fi;
 
 #Build Configuration
-./configure --prefix=/home/hieu/arm-eabi --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=Boosted --with-binutils-version=current --with-gmp-version=current --with-mpfr-version=current --with-mpc-version=current --with-gdb-version=7.7 --with-sysroot=/opt/android-ndk/platforms/android-19/arch-arm --with-cloog-version=current
+./configure --prefix=/home/hieu/arm-eabi-4.8 --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=Boosted --with-binutils-version=current --enable-plugins --with-gmp-version=current --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=current --enable-gold=yes --enable-gold=default
 
 #Build the toolchain
-make -j16;
+make $J;
 
 #Install the toolchain
 make install;
-
