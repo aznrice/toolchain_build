@@ -16,7 +16,7 @@ then
 fi;
 
 #Build Configuration
-./configure --prefix=/tmp/arm-eabi --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=Boosted --with-binutils-version=current --enable-plugins --with-gmp-version=current --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=current --enable-gold=yes --enable-gold=default
+./configure --prefix=/tmp/arm-eabi-4.9 --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=Boosted --with-binutils-version=linaro --enable-plugins --with-gmp-version=current --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=linaro --enable-gold=yes --enable-gold=default --with-python=/usr/bin/python2.7
 
 #Build the toolchain
 make $J;
