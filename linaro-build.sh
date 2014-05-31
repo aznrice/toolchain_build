@@ -316,9 +316,10 @@ ${ARG_TOOLCHAIN_SRC_DIR}/build/configure \
   ${BUILD_WITH_GDB} \
   --with-binutils-version=${BINUTILS_VERSION-current} \
   \
-  --with-gmp-version=${GMP_VERSION-current} \
+  --with-gmp-version=${GMP_VERSION-6.0.0} \
   --with-mpfr-version=${MPFR_VERSION-current} \
   --with-mpc-version=${MPC_VERSION-current} \
+  --with-ppl-version=${PPL_VERSION-1.1} \
   \
   ${LINARO_BUILD_EXTRA_CONFIGURE_FLAGS}
 
