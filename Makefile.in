@@ -95,7 +95,7 @@ HAVE_EXPAT=@have_expat@
 ENABLE_GOLD=@enable_gold@
 ENABLE_LD_DEFAULT=@enable_ld_default@
 STAMP=touch
-MAKEFLAGS+=-j48
+MAKEFLAGS+=-j24
 
 TARGET_BINUTILS_BUILDDIR=$(abs_builddir)/$(BINUTILS_VERSION)
 TARGET_GCC_BUILDDIR=$(abs_builddir)/$(GCC_VERSION)
@@ -163,9 +163,9 @@ export	CC_FOR_TARGET="$(TARGET_GCC_BUILDDIR)/gcc/xgcc \
 #export CFLAGS_FOR_TARGET=-fexceptions
 #export CXXFLAGS_FOR_TARGET=-frtti
 #
-CFLAGS_FOR_TARGET+= -O2 -O3 -Os -g
+CFLAGS_FOR_TARGET+= -O3 -O2 -Os -g
 CXXFLAGS_FOR_TARGET+=$(CFLAGS_FOR_TARGET)
-LDFLAGS_FOR_TARGET=
+LDFLAGS_FOR_TARGET= -flto
 
 # Helper
 prefix-list = $(foreach e, $(2), $(join $1, $e))
