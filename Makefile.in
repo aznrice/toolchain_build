@@ -95,7 +95,7 @@ HAVE_EXPAT=@have_expat@
 ENABLE_GOLD=@enable_gold@
 ENABLE_LD_DEFAULT=@enable_ld_default@
 STAMP=touch
-MAKEFLAGS+=-j24
+MAKEFLAGS+=-j12
 
 TARGET_BINUTILS_BUILDDIR=$(abs_builddir)/$(BINUTILS_VERSION)
 TARGET_GCC_BUILDDIR=$(abs_builddir)/$(GCC_VERSION)
@@ -163,9 +163,9 @@ export	CC_FOR_TARGET="$(TARGET_GCC_BUILDDIR)/gcc/xgcc \
 #export CFLAGS_FOR_TARGET=-fexceptions
 #export CXXFLAGS_FOR_TARGET=-frtti
 #
-CFLAGS_FOR_TARGET+= -O3 -O2 -Os -g
+CFLAGS_FOR_TARGET+= -O3 -O2 -Os -g -fgraphite
 CXXFLAGS_FOR_TARGET+=$(CFLAGS_FOR_TARGET)
-LDFLAGS_FOR_TARGET= -flto
+LDFLAGS_FOR_TARGET=
 
 # Helper
 prefix-list = $(foreach e, $(2), $(join $1, $e))
@@ -448,11 +448,11 @@ GCC_CONFIG_ARGS += $(GCC_CONFIG_LIBSTDCXX_V3) --disable-libssp \
 CFLAGS_FOR_TARGET += -DTARGET_POSIX_IO -fno-short-enums
 
 ifeq ($(target_cpu),i686)
-GCC_CONFIG_ARGS += --with-arch=i686 --with-tune=intel --with-fpmath=sse
+GCC_CONFIG_ARGS += --with-arch=i686 --with-tune=generic --with-fpmath=sse
 endif
 
 ifeq ($(target_cpu),x86_64)
-GCC_CONFIG_ARGS += --with-arch=x86-64 --with-tune=intel --with-fpmath=sse \
+GCC_CONFIG_ARGS += --with-arch=x86-64 --with-tune=generic --with-fpmath=sse \
                    --with-multilib-list=m32,m64,mx32
 endif
 
