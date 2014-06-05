@@ -163,7 +163,7 @@ export	CC_FOR_TARGET="$(TARGET_GCC_BUILDDIR)/gcc/xgcc \
 #export CFLAGS_FOR_TARGET=-fexceptions
 #export CXXFLAGS_FOR_TARGET=-frtti
 #
-CFLAGS_FOR_TARGET+= -O3 -O2 -Os -g -fgraphite
+CFLAGS_FOR_TARGET+= -O3 -O2 -Os -g
 CXXFLAGS_FOR_TARGET+=$(CFLAGS_FOR_TARGET)
 LDFLAGS_FOR_TARGET=
 
@@ -551,7 +551,7 @@ install-target-newlib: stmp-build-target-newlib
 # host gmp rules
 .PHONY: config-host-gmp build-host-gmp install-host-gmp
 config-host-gmp: stmp-config-host-gmp
-GMP_CONFIG_ARGS=$(host_baseargs) --prefix=$(TEMP_INSTALLDIR) --disable-shared \
+GMP_CONFIG_ARGS=$(host_baseargs) --prefix=$(TEMP_INSTALLDIR) --disable-shared --enable-maintainer-mode \
 	  --host=${cur_host} --build=${cur_build}
 
 ifeq ($(ENABLE_GRAPHITE),yes)
