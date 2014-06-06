@@ -484,7 +484,7 @@ case $CLOOG_VERSION in
     # CLooG/PPL relies on the PPL for version 0.15.x
     CLOOG_VERSION="ppl-$CLOOG_VERSION"
     ;;
-  0.16*|0.17*|0.18*|current)
+  0.16*|0.17*|0.18*|current|gnu)
     # CLooG 0.16+ has its own embedded polyhedral library
     CLOOG_BACKEND="--enable-cloog-backend=isl"
     ;;

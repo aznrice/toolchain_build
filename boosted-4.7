@@ -16,7 +16,7 @@
 # limitations under the License.
 
 # Set number of cores here
-export J=-j24;
+export J=-j12;
 
 #Make a clean build
 if [ -e Makefile ];
@@ -38,3 +38,27 @@ make $J;
 
 #Install the toolchain
 make install;
+
+
+#Make a clean build
+if [ -e Makefile ];
+then
+    make $J distclean
+fi;
+
+#Make a clean install always
+if [ -d /tmp/arm-eabi-4.7 ]
+then
+    rm -rf /tmp/arm-eabi-4.7
+fi;
+
+#Build Configuration
+./configure --prefix=/tmp/arm-eabi-4.7 --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=Boosted --with-binutils-version=linaro --enable-plugins --with-gmp-version=gnu --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=linaro --enable-gold=yes --enable-gold=default --with-python=/usr/bin/python2.7 
+
+#Build the toolchain
+make $J;
+
+#Install the toolchain
+make install;
+
+
