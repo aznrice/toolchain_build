@@ -14,31 +14,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# Set GCC VERSION
+export $BTC=4.7
+
+TEMP="`mktemp -d /tmp/boosted-$BTC-XXXXX`"
 
 # Set number of cores here
 export J=-j12;
 
-#Make a clean build
-if [ -e Makefile ];
-then
-    make $J distclean
-fi;
-
-#Make a clean install always
-if [ -d /tmp/arm-linux-androideabi-4.7 ]
-then
-    rm -rf /tmp/arm-linux-androideabi-4.7
-fi;
-
-#Build Configuration
-./configure --prefix=/tmp/arm-linux-androideabi-4.7 --target=arm-linux-androideabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-linux-androideabi-&' --with-gcc-version=Boosted --with-binutils-version=linaro --enable-plugins --with-gmp-version=gnu --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=linaro --enable-gold=yes --enable-gold=default --with-python=/usr/bin/python2.7
-
-#Build the toolchain
-make $J;
-
-#Install the toolchain
-make install;
-
+#Change GCC Branch if needed
+cd ../gcc/gcc-Boosted
+git checkout linaro-$BTC
+cd ../../build
 
 #Make a clean build
 if [ -e Makefile ];
@@ -47,13 +34,14 @@ then
 fi;
 
 #Make a clean install always
-if [ -d /tmp/arm-eabi-4.7 ]
+if [ -d "$TEMP"/arm-linux-androideabi-$BTC ]
 then
-    rm -rf /tmp/arm-eabi-4.7
+    rm -rf "$TEMP"/arm-linux-androideabi-$BTC
 fi;
 
+
 #Build Configuration
-./configure --prefix=/tmp/arm-eabi-4.7 --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=Boosted --with-binutils-version=linaro --enable-plugins --with-gmp-version=gnu --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=linaro --enable-gold=yes --enable-gold=default --with-python=/usr/bin/python2.7 
+./configure --prefix="$TEMP"/arm-linux-androideabi-$BTC --target=arm-linux-androideabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-linux-androideabi-&' --with-gcc-version=Boosted --with-binutils-version=current --enable-plugins --with-gmp-version=current --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=current --enable-gold=yes --enable-gold=default --with-python=/usr/bin/python2.7
 
 #Build the toolchain
 make $J;
@@ -61,4 +49,26 @@ make $J;
 #Install the toolchain
 make install;
 
+#Make a clean build
+if [ -e Makefile ];
+then
+    make $J distclean
+fi;
 
+#Make a clean install always
+if [ -d "$TEMP"/arm-eabi-$BTC ]
+then
+    rm -rf "$TEMP"/arm-eabi-$BTC
+fi;
+
+#Build Configuration
+./configure --prefix="$TEMP"/arm-eabi-$BTC --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=Boosted --with-binutils-version=current --enable-plugins --with-gmp-version=current --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=current --enable-gold=yes --enable-gold=default --with-python=/usr/bin/python2.7 
+
+#Build the toolchain
+make $J;
+
+#Install the toolchain
+make install;
+
+#Compressing toolchains
+XZ_OPT=-9 tar cJf boosted-$BTC-YYYYMM.tar.xz $TEMP
