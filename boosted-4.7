@@ -15,11 +15,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # Set GCC VERSION
+YYYYMM=`date +%Y.%m`
 
-TEMP="`mktemp -d /tmp/boosted-4.7-XXXXX`"
-
-# Set number of cores here
-export J=-j12;
+TEMP="`mktemp -d /tmp/boosted-4.7-YYYYMM`"
 
 #Change GCC Branch if needed
 cd ../gcc/gcc-Boosted
@@ -29,7 +27,7 @@ cd ../../build
 #Make a clean build
 if [ -e Makefile ];
 then
-    make $J distclean
+    make -j$CPUS distclean
 fi;
 
 #Make a clean install always
@@ -40,10 +38,10 @@ fi;
 
 
 #Build Configuration
-./configure --prefix="$TEMP"/arm-linux-androideabi-4.7 --target=arm-linux-androideabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-linux-androideabi-&' --with-gcc-version=Boosted --with-binutils-version=current --enable-plugins --with-gmp-version=current --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=current --enable-gold=yes --enable-gold=default --with-python=/usr/bin/python2.7
+./configure --prefix="$TEMP"/arm-linux-androideabi-4.7 --target=arm-linux-androideabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-linux-androideabi-&' --with-gcc-version=Boosted --with-binutils-version=current --enable-plugins --with-gmp-version=current --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=current --enable-gold=yes --enable-gold=default
 
 #Build the toolchain
-make $J;
+make -j$CPUS;
 
 #Install the toolchain
 make install;
@@ -51,7 +49,7 @@ make install;
 #Make a clean build
 if [ -e Makefile ];
 then
-    make $J distclean
+    make -j$CPUS distclean
 fi;
 
 #Make a clean install always
@@ -61,10 +59,10 @@ then
 fi;
 
 #Build Configuration
-./configure --prefix="$TEMP"/arm-eabi-4.7 --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=Boosted --with-binutils-version=current --enable-plugins --with-gmp-version=current --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=current --enable-gold=yes --enable-gold=default --with-python=/usr/bin/python2.7 
+./configure --prefix="$TEMP"/arm-eabi-4.7 --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=Boosted --with-binutils-version=current --enable-plugins --with-gmp-version=current --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=current --enable-gold=yes --enable-gold=default
 
 #Build the toolchain
-make $J;
+make -j$CPUS;
 
 #Install the toolchain
 make install;
