@@ -67,4 +67,4 @@ make -j$CPUS;
 make install;
 
 #Compressing toolchains
-XZ_OPT=-9 tar cJf boosted-4.7-YYYYMM.tar.xz $TEMP
+XZ_OPT=-9 tar cJf boosted-4.7-$(date +%Y.%m).tar.xz $TEMP
