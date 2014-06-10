@@ -499,8 +499,8 @@ stmp-build-target-gcc: stmp-config-target-gcc install-target-binutils
 	&& $(STAMP) $@
 install-target-gcc-gcc: stmp-build-target-gcc
 	($(canadian_env) \
-	 $(MAKE) -C gcc-target-$(GCC_VERSION) $(gcc_install_target))
-	(cd $(prefix)/libexec/gcc/arm-linux-androideabi && cd `ls -1` && ln -s ../../../../bin/$(cur_target)-ld real-ld)
+	 $(MAKE) -C $(GCC_VERSION) $(gcc_install_target))
+	(cd $(prefix)/libexec/gcc/$(cur_target) && cd `ls -1` && ln -s ../../../../bin/$(cur_target)-ld real-ld)
 install-target-gcc: install-target-gcc-gcc $(install-target-gcc-multilibs)
 
 # minimal gcc rules
