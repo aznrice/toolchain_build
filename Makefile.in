@@ -163,7 +163,7 @@ export	CC_FOR_TARGET="$(TARGET_GCC_BUILDDIR)/gcc/xgcc \
 #export CFLAGS_FOR_TARGET=-fexceptions
 #export CXXFLAGS_FOR_TARGET=-frtti
 #
-CFLAGS_FOR_TARGET+= -O3 -g
+CFLAGS_FOR_TARGET+= -O3 -flto -g 
 CXXFLAGS_FOR_TARGET+=$(CFLAGS_FOR_TARGET)
 LDFLAGS_FOR_TARGET=
 
@@ -458,7 +458,7 @@ endif
 
 # ARM specific options.
 ifeq ($(target_cpu),arm)
-GCC_CONFIG_ARGS += --with-float=soft --with-fpu=neon --with-arch=armv7-a
+GCC_CONFIG_ARGS += --with-arch=armv7-a --with-fpu=vfpv3-d16 --with-float=hard
 
 ifneq ($(target_os),linux-androideabi)
 GCC_CONFIG_ARGS += --with-abi=aapcs
