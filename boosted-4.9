@@ -21,6 +21,7 @@ TEMP="`mktemp -d /tmp/boosted-4.9-XXXXX`"
 #Change GCC Branch if needed
 cd ../gcc/gcc-Boosted
 git checkout linaro-4.9-branch
+git pull
 cd ../../build
 
 #Make a clean build
