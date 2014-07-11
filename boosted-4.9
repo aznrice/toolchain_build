@@ -14,7 +14,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# Set GCC VERSION
+
+# Set CFLAGS & CXXFLAGS
+export CFLAGS="-O3 -pipe"
+export CXXFLAGS="-O3 -pipe"
+
 YYYYMM=`date +%Y.%m`
 TEMP="`mktemp -d /tmp/boosted-4.9-XXXXX`"
 
@@ -36,9 +40,8 @@ then
     rm -rf "$TEMP"/arm-linux-androideabi-4.9
 fi;
 
-
 #Build Configuration
-./configure --prefix="$TEMP"/arm-linux-androideabi-4.9 --target=arm-linux-androideabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-linux-androideabi-&' --with-gcc-version=Boosted --with-binutils-version=current --enable-plugins --with-gmp-version=current --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=current --enable-gold=yes --enable-gold=default
+./configure --prefix="$TEMP"/arm-linux-androideabi-4.9 --target=arm-linux-androideabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-linux-androideabi-&' --with-gcc-version=Boosted --with-binutils-version=current --enable-plugins --with-gmp-version=current --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=current --enable-gold=yes --enable-__cxa_atexit --enable-addon --enable-threads=posix --enable-libmudflap  --enable-libssp --enable-c99 --enable-long-long --with-mode=thumb --enable-multiarch --disable-libstdcxx-pch --enable-linker-build-id --enable-pthreads
 
 #Build the toolchain
 make -j$CPUS;
@@ -59,7 +62,7 @@ then
 fi;
 
 #Build Configuration
-./configure --prefix="$TEMP"/arm-eabi-4.9 --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=Boosted --with-binutils-version=current --enable-plugins --with-gmp-version=current --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=current --enable-gold=yes --enable-gold=default
+./configure --prefix="$TEMP"/arm-eabi-4.9 --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=Boosted --with-binutils-version=current --enable-plugins --with-gmp-version=current --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=current --enable-gold=yes --enable-__cxa_atexit --enable-addon --enable-threads=posix --enable-hardfloat --with-float=hard --enable-libmudflap  --enable-libssp --enable-c99 --enable-long-long --with-mode=thumb --enable-multiarch --disable-libstdcxx-pch --enable-linker-build-id --enable-pthreads
 
 #Build the toolchain
 make -j$CPUS;
