@@ -463,8 +463,10 @@ GCC_CONFIG_ARGS += --with-arch=armv7-a --with-fpu=vfpv3-d16 --with-float=hard
 ifneq ($(target_os),linux-androideabi)
 GCC_CONFIG_ARGS += --with-abi=aapcs
 endif
+ifneq ($(target_os),linux-gnueabihf)
+GCC_CONFIG_ARGS += --with-abi=aapcs
 endif
-
+endif
 endif
 
 # We add the baseargs and the end so that they override any default args

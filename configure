@@ -2010,7 +2010,7 @@ test -z "$INSTALL_DATA" && INSTALL_DATA='${INSTALL} -m 644'
 
 GDB_TARGET=$target
 case $target in
-  arm-unknown-linux-androideabi | arm-unknown-eabi)
+  arm-unknown-linux-androideabi | arm-unknown-eabi | arm-unknown-linux-gnueabihf)
     BUILD_ANDROID_GCC=yes
     GDB_TARGET=arm-elf-linux
     ;;
