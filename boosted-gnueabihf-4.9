@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# Copyright (C) 2014 Boosted Toolchains
+# Copyright (C) 2014 IllusionRom
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Set CFLAGS & CXXFLAGS
+export CFLAGS="-O3 -pipe"
+export CXXFLAGS="-O3 -pipe"
+
+YYYYMM=`date +%Y.%m`
+TEMP="`mktemp -d /tmp/boosted-4.9-XXXXX`"
+
+#Change GCC Branch if needed
+cd ../gcc/gcc-Boosted
+git reset --hard
+git checkout github/linaro-4.9-branch
+cd ../../build
+
+#Make a clean build
+if [ -e Makefile ];
+then
+    make -j$CPUS distclean
+fi;
+
+#Make a clean install always
+if [ -d /tmp/boosted-* ]
+then
+    rm -rf /tmp/boosted-*
+fi;
+
+#Build Configuration
+./configure --prefix="$TEMP"/arm-linux-gnueabihf-4.9 --program-prefix=arm-linux-gnueabihf- --target=arm-linux-gnueabihf --host=x86_64-linux-gnu --program-transform-name='s&^&arm-linux-gnueabihf-&' --build=x86_64-linux-gnu --with-gcc-version=Boosted --with-binutils-version=current --enable-plugins --with-gmp-version=current --with-mpfr-version=current --with-gdb-version=current --with-mpc-version=current --enable-cloog-backend=isl --with-cloog-version=current --with-ppl-version=1.1 --enable-graphite=yes --with-sysroot=/ --disable-libquadmath --disable-libatomic --disable-libsanitizer --with-gold-version=current --enable-gold=yes --enable-__cxa_atexit --enable-addon --enable-threads=posix --enable-hardfloat --with-float=hard --with-newlib --enable-libmudflap --enable-long-long --with-mode=thumb --enable-multiarch --disable-libstdcxx-pch --enable-linker-build-id --enable-pthreads
+
+#Build the toolchain
+make -j$CPUS;
+
+#Install the toolchain
+make install;
+
+#Compressing toolchains
+XZ_OPT=-9 tar cJf boosted-arm-linux-gnueabi-4.9-$(date +%Y.%m.%d).tar.xz $TEMP
